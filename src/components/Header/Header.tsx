@@ -1,9 +1,16 @@
 import Link from "next/link";
 import React, { useState } from "react";
-import NavigationMenu from "./components/NavigationMenu";
+import {
+  ClerkProvider,
+  SignedIn,
+  SignedOut,
+  SignInButton,
+  UserButton
+} from "@clerk/nextjs";
+import MainMenu from "./components/MainMenu";
 
 
-function Header() {
+function Header({ menuItems }: { menuItems?: IMenu[] }) {
 
   const [openSubMen, setOpenSubMen] = useState<string | null>(null);
   const onClick = () => {
@@ -18,45 +25,23 @@ function Header() {
 
   return (
     <header id="header" className="header white-menu navbar-dark">
-      <div className="fixed top-0 right-0 left-0 z-1030">
-        {/* MOBILE HEADER */}
-        <div className="wsmobileheader clearfix">
-          <Link legacyBehavior href="#">
-            <a
-              onClick={() => onClick()}
-              id="wsnavtoggle"
-              className="wsanimated-arrow"
-            >
-              <span />
+      <div className="wsmainfull menu clearfix" id="wsmainfull">
+        <div className="desktoplogo">
+          <Link legacyBehavior href="/">
+            <a href="#hero-3" className="logo-black">
+              <img
+                src="images/logo.png"
+                width={172}
+                height={40}
+                alt="header-logo"
+              />
             </a>
           </Link>
-          <span className="smllogo smllogo-black">
-            <img
-              src="images/logo.png"
-              width={172}
-              height={40}
-              alt="mobile-logo"
-            />
-          </span>
-          <span className="smllogo smllogo-white">
-            <img
-              src="images/logo-white.png"
-              width={172}
-              height={40}
-              alt="mobile-logo"
-            />
-          </span>
         </div>
-        <div className="wsmainfull menu clearfix" id="wsmainfull">
-          <div className="wsmainwp clearfix">
+        <div>
 
-            <NavigationMenu />
-
-          </div>
-
+        <MainMenu onClick={onClick} activeFun={activeFun} iconChange={iconChange} activeLi={activeLi} menuItems={menuItems} />
         </div>
-        {/* NAVIGATION MENU */}
-        {/* END NAVIGATION MENU */}
 
       </div>
     </header>

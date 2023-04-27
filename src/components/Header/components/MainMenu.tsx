@@ -1,16 +1,32 @@
 import Link from 'next/link'
 import { FC } from 'react'
 import { menu } from '../../../utils/enums'
+import {
+  SignedIn,
+  SignedOut,
+  SignInButton,
+  useUser,
+  UserButton
+} from "@clerk/nextjs";
+import { useRouter } from 'next/router';
 
-const MainMenu: FC<any> = ({ onClick, activeFun, iconChange, activeLi }) => {
+const MainMenu: FC<any> = ({ onClick, activeFun, iconChange, activeLi, menuItems }: { onClick: (name: string) => void, activeFun: (name: string) => void, iconChange: (name: string) => void, activeLi: (name: string) => void, menuItems: IMenu[] }) => {
+  const router = useRouter();
+  const { isLoaded, isSignedIn, user } = useUser()
+
+  if(isSignedIn){
+    router.push('/my-courses')
+  }
+
+
   return (
     <nav className="wsmenu clearfix" >
       <ul className="wsmenu-list">
         {
-          menu.map((item, i) => {
+          (menuItems || menu).map((item, i) => {
             if (item.children.length) {
               return (
-                <li onClick={() => activeFun(item.label)}>
+                <li key={i} onClick={() => activeFun(item.label)}>
                   <span className={`wsmenu-click ${iconChange(item.label)}`}>
                     <i className="wsmenu-arrow" />
                   </span>
@@ -25,8 +41,8 @@ const MainMenu: FC<any> = ({ onClick, activeFun, iconChange, activeLi }) => {
                       <div className="row">
                         <ul className="col-lg-6 col-md-12 col-xs-12 link-list left-link-list">
                           {
-                            item.children.map(item => {
-                              return <li>
+                            item.children.map((item, index) => {
+                              return <li key={i + '-' + index}>
                                 <Link href={item.href}>{item.label}</Link>
                               </li>
                             })
@@ -44,19 +60,27 @@ const MainMenu: FC<any> = ({ onClick, activeFun, iconChange, activeLi }) => {
             }
           })
         }
-        <li className="nl-simple">
+
+
+        {!isSignedIn && <li className="nl-simple">
           <Link href="/sign-in">
             <span className="btn btn-tra-grey green-hover">
               Sign In
             </span>
           </Link>
-        </li>
-        <li className="nl-simple">
+        </li>}
+        {!isSignedIn && <li className="nl-simple">
           <Link href="/sign-up">
             <span className="btn btn-tra-grey rose-hover">
             Register
             </span>
           </Link>
+        </li>}
+
+        <li className="nl-simple">
+          <SignedIn >
+            <UserButton  />
+          </SignedIn>
         </li>
       </ul>
 
