@@ -3,8 +3,6 @@ import { FC } from 'react'
 import { menu } from '../../../utils/enums'
 import {
   SignedIn,
-  SignedOut,
-  SignInButton,
   useUser,
   UserButton
 } from "@clerk/nextjs";
@@ -13,8 +11,9 @@ import { useRouter } from 'next/router';
 const MainMenu: FC<any> = ({ onClick, activeFun, iconChange, activeLi, menuItems }: { onClick: (name: string) => void, activeFun: (name: string) => void, iconChange: (name: string) => void, activeLi: (name: string) => void, menuItems: IMenu[] }) => {
   const router = useRouter();
   const { isLoaded, isSignedIn, user } = useUser()
+  console.log(user, user?.organizationMemberships[0]?.role);
 
-  if(isSignedIn){
+  if(isSignedIn && router.pathname !== '/my-courses'){
     router.push('/my-courses')
   }
 

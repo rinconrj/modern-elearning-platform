@@ -23,3 +23,16 @@ export const userMenu: IMenu[] =[
     href:'/deseos'
   },
 ]
+
+export const adminMenu: IMenu[] =[
+  {
+    label: 'Mis Cursos',
+    children: [],
+    href:'/cursos/:id'
+  },
+  {
+    label: 'Lista de Deseos',
+    children: [],
+    href:'/deseos'
+  },
+]

@@ -1,28 +1,12 @@
-import React, { FC, useState } from 'react'
+import React, { FC } from 'react'
 import {
-  Navbar,
-  MobileNav,
-  Typography,
-  Button,
-  IconButton,
-  Select,
-  Option,
   Input,
 } from "@material-tailwind/react";
-import {
-  SignedIn,
-  SignedOut,
-  SignInButton,
-  UserButton
-} from "@clerk/nextjs";
 import { userMenu } from '~/utils/enums';
 import Link from 'next/link';
 import CustomSelect from '~/components/ui/CustomSelect';
 import { FaSearch } from 'react-icons/fa';
 import Header from '~/components/Header/Header';
-
-
-
 
 const courses = [
   <div key={1} className="col-md-6 col-lg-4 col-xl-3">

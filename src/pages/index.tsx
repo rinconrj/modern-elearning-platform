@@ -13,8 +13,6 @@ import Layout from "~/layout/Layout";
 
 const Home: NextPage = () => {
 
-  const {data} = api.courses.getAll.useQuery()
-
   return (
     <div id="page" className="page-wrapper">
     <Layout>
